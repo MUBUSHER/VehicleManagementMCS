@@ -16,16 +16,51 @@ namespace VehicleManagement
         {
             InitializeComponent();
             //Vehicle.VehicleList = "FORM 1";
-        } 
+        }
 
 
-        
+        void BindDataGridView(List<Vehicle> vehList)
+        {
+            DG_VEHICLE.DataSource = new BindingSource(vehList, "");
+
+        }
 
         private void Form1_Load(object sender, EventArgs e)
-        {                      
-            
+        {
 
-            DG_VEHICLE.DataSource = Vehicle.VehicleList;            
+
+
+            //Vehicle.VehicleList.Where()
+
+
+
+
+
+
+
+
+
+
+
+            BindDataGridView(Vehicle.VehicleList);
+
+            DG_VEHICLE.Columns[1].Width = 250;
+            DG_VEHICLE.Columns[1].HeaderText = "VEHICLE COMPANY NAME";
+
+            foreach (DataGridViewColumn gvColumn in DG_VEHICLE.Columns)
+            {
+                gvColumn.ReadOnly = true;
+            }
+
+
+
+            DG_VEHICLE.Columns.Add(new DataGridViewCheckBoxColumn()
+            {
+                Name = "Selected ",
+
+            });
+            //DG_VEHICLE.Rows
+            //DG_VEHICLE.Columns
 
             // METHOD 1 - EASY
             //List<Vehicle> records = vehicleList.
@@ -48,20 +83,17 @@ namespace VehicleManagement
             //}
         }
 
-        
+
 
         private void tbSearch_TextChanged(object sender, EventArgs e)
         {
-            //;
-            
-
             List<Vehicle> records = Vehicle.VehicleList
-                .Where(c => 
-                c.VehicleName.ToUpper().Contains(tbSearch.Text.ToUpper()) | 
-                c.MadeBy.ToUpper().Contains(tbSearch.Text.ToUpper()) |
-                c.Price.ToString().Contains(tbSearch.Text)
+                .Where(c =>
+                c.VehicleName.ToUpper().Contains(tbSearch.Text.ToUpper()) | // condition
+                c.MadeBy.ToUpper().Contains(tbSearch.Text.ToUpper()) | // condition2
+                c.Price.ToString().Contains(tbSearch.Text) // condition 3
                 ).ToList();
-            DG_VEHICLE.DataSource = records;
+            BindDataGridView(records);
 
             //DG_VEHICLE.Refresh();
         }
@@ -70,7 +102,7 @@ namespace VehicleManagement
         {
             //tbPrice.Text
             decimal price;
-            
+
             if (!decimal.TryParse(tbPrice.Text, out price))
             {
                 MessageBox.Show("Price Value is not a decimal number");
@@ -89,16 +121,40 @@ namespace VehicleManagement
                 return;
             }
 
-            Vehicle vehicle = new Vehicle()
-            {
-                Id = 25,
-                VehicleName = tbVehicleName.Text,
-                Model = tbModel.Text,
-                MadeBy = tbMadeBy.Text,
-                Price = decimal.Parse(tbPrice.Text),
-            };
+            //tbPrice.Text
+            decimal price;
 
-            Vehicle.VehicleList.Add(vehicle);
+            if (!decimal.TryParse(tbPrice.Text, out price))
+            {
+                MessageBox.Show("Price Value is not a decimal number", "COMAPPA");
+                tbPrice.Text = "";
+                return;
+            }
+
+            if (tbId.Text == "")
+            {
+                Vehicle vehicle = new Vehicle()
+                {
+                    Id = 25,
+                    VehicleName = tbVehicleName.Text,
+                    Model = tbModel.Text,
+                    MadeBy = tbMadeBy.Text,
+                    Price = decimal.Parse(tbPrice.Text),
+                };
+
+                Vehicle.VehicleList.Add(vehicle);
+
+            }
+            else
+            {
+                // update mode;
+                Vehicle vehicle = Vehicle.VehicleList.FirstOrDefault(c => c.Id.ToString() == tbId.Text);
+                vehicle.Id = int.Parse(tbId.Text);
+                vehicle.VehicleName = tbVehicleName.Text;
+                vehicle.Model = tbModel.Text;
+                vehicle.MadeBy = tbMadeBy.Text;
+                vehicle.Price = decimal.Parse(tbPrice.Text);
+            }
 
             DG_VEHICLE.DataSource = new BindingSource(Vehicle.VehicleList, ""); ;
             //DG_VEHICLE.Refresh();
@@ -106,7 +162,64 @@ namespace VehicleManagement
 
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
+            tbId.Text = "";
 
+            button1.Text = "Add Vehicle";
+            tbId.Text = "";
+            tbMadeBy.Text = "";
+            tbVehicleName.Text = "";
+            tbModel.Text = "";
+            tbPrice.Text = "0";
+
+        }
+
+        private void DG_VEHICLE_SelectionChanged(object sender, EventArgs e)
+        {
+
+            //int rowIndex = DG_VEHICLE.CurrentRow.Index;
+            //int columnIndex = DG_VEHICLE.CurrentRow.Cells[0].ColumnIndex;
+
+            if (DG_VEHICLE.SelectedRows.Count != 0)
+            {
+                tbId.Text = DG_VEHICLE.SelectedRows[0].Cells[0].Value.ToString();
+                tbMadeBy.Text = DG_VEHICLE.SelectedRows[0].Cells[1].Value.ToString();
+                tbVehicleName.Text = DG_VEHICLE.SelectedRows[0].Cells[2].Value.ToString();
+                tbModel.Text = DG_VEHICLE.SelectedRows[0].Cells[3].Value.ToString();
+                tbPrice.Text = DG_VEHICLE.SelectedRows[0].Cells[4].Value.ToString();
+
+                button1.Text = "Edit Vehicle";
+            }
+
+
+        }
+
+        private void removeVehicleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            DialogResult dlg = MessageBox.Show($"are you sure you want to delete Id: {DG_VEHICLE.SelectedRows[0].Cells[0].Value  } record?",
+                "Vehicle Management",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dlg == DialogResult.Yes)
+            {
+
+                Vehicle.VehicleList.RemoveAll(c => c.Id.ToString() == tbId.Text);
+
+                DG_VEHICLE.DataSource = new BindingSource(Vehicle.VehicleList, "");
+            }
+
+            if (DG_VEHICLE.Rows.Count == 0)
+            {
+
+                tbId.Text = "";
+
+                button1.Text = "Add Vehicle";
+                tbId.Text = "";
+                tbMadeBy.Text = "";
+                tbVehicleName.Text = "";
+                tbModel.Text = "";
+                tbPrice.Text = "0";
+
+            }
         }
     }
 }

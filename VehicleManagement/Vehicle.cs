@@ -20,7 +20,7 @@ namespace VehicleManagement
                 new Vehicle(){ Id=2, MadeBy = "SUZUKI", Model = "2021", Price = 16.65m, VehicleName ="CULTAS" },
                 new Vehicle(){ Id=3, MadeBy = "SUZUKI", Model = "2018", Price = 17.80m, VehicleName ="WAGON-R" },
                 new Vehicle(){ Id=4, MadeBy = "honda", Model = "2019", Price = 23.65m, VehicleName ="CI VIC." },
-                new Vehicle(){ Id=5,MadeBy = "SUZUKI", Model = "2020", Price = 14.35m, VehicleName ="WAGON-R" },
+                new Vehicle(){ Id=5,MadeBy = "SUZUKI XXXXXXXXXXXXXXXX", Model = "2020", Price = 14.35m, VehicleName ="WAGON-R" },
                 new Vehicle(){ Id=6,MadeBy = "SUZUKI", Model = "2019", Price = 12.11m, VehicleName ="CIVIC" },
             };
     }

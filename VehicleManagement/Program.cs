@@ -18,7 +18,8 @@ namespace VehicleManagement
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
 
-            //Vehicle.VehicleList = "PROGRAM FILE";
+
+
         }
     }
 }

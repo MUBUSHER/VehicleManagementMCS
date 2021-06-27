@@ -31,6 +31,9 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.DG_VEHICLE = new System.Windows.Forms.DataGridView();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeVehicleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tbSearch = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tbMadeBy = new System.Windows.Forms.TextBox();
@@ -42,9 +45,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.removeVehicleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label6 = new System.Windows.Forms.Label();
+            this.tbId = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.DG_VEHICLE)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -52,18 +54,43 @@
             // DG_VEHICLE
             // 
             this.DG_VEHICLE.AllowUserToAddRows = false;
+            this.DG_VEHICLE.AllowUserToResizeColumns = false;
+            this.DG_VEHICLE.AllowUserToResizeRows = false;
             this.DG_VEHICLE.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
             this.DG_VEHICLE.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DG_VEHICLE.ContextMenuStrip = this.contextMenuStrip1;
             this.DG_VEHICLE.Location = new System.Drawing.Point(15, 282);
             this.DG_VEHICLE.MultiSelect = false;
             this.DG_VEHICLE.Name = "DG_VEHICLE";
-            this.DG_VEHICLE.ReadOnly = true;
+            this.DG_VEHICLE.RowHeadersVisible = false;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.DG_VEHICLE.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.DG_VEHICLE.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DG_VEHICLE.Size = new System.Drawing.Size(766, 345);
             this.DG_VEHICLE.TabIndex = 0;
+            this.DG_VEHICLE.SelectionChanged += new System.EventHandler(this.DG_VEHICLE_SelectionChanged);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem2,
+            this.removeVehicleToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(158, 48);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(157, 22);
+            this.toolStripMenuItem2.Text = "Add Vehicle";
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
+            // 
+            // removeVehicleToolStripMenuItem
+            // 
+            this.removeVehicleToolStripMenuItem.Name = "removeVehicleToolStripMenuItem";
+            this.removeVehicleToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.removeVehicleToolStripMenuItem.Text = "Remove Vehicle";
+            this.removeVehicleToolStripMenuItem.Click += new System.EventHandler(this.removeVehicleToolStripMenuItem_Click);
             // 
             // tbSearch
             // 
@@ -106,7 +133,6 @@
             this.tbPrice.Name = "tbPrice";
             this.tbPrice.Size = new System.Drawing.Size(149, 43);
             this.tbPrice.TabIndex = 5;
-            this.tbPrice.TextChanged += new System.EventHandler(this.tbPrice_TextChanged);
             // 
             // tbVehicleName
             // 
@@ -162,32 +188,30 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // contextMenuStrip1
+            // label6
             // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem2,
-            this.removeVehicleToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(158, 48);
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(534, 67);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(35, 13);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "label6";
             // 
-            // toolStripMenuItem2
+            // tbId
             // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(157, 22);
-            this.toolStripMenuItem2.Text = "Edit Vehicle";
-            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
-            // 
-            // removeVehicleToolStripMenuItem
-            // 
-            this.removeVehicleToolStripMenuItem.Name = "removeVehicleToolStripMenuItem";
-            this.removeVehicleToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
-            this.removeVehicleToolStripMenuItem.Text = "Remove Vehicle";
+            this.tbId.Font = new System.Drawing.Font("Segoe UI Semibold", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbId.Location = new System.Drawing.Point(341, 9);
+            this.tbId.Name = "tbId";
+            this.tbId.Size = new System.Drawing.Size(310, 43);
+            this.tbId.TabIndex = 13;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 649);
+            this.Controls.Add(this.tbId);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -228,6 +252,8 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem removeVehicleToolStripMenuItem;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox tbId;
     }
 }
 
